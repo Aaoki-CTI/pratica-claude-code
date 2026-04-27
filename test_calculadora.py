@@ -1,66 +1,115 @@
 import pytest
-from calculadora import soma, subtracao, multiplicacao, divisao
+from calculadora import somar, subtrair, multiplicar, dividir, raiz_quadrada
 
 
-class TestSoma:
-    def test_soma_inteiros(self):
-        assert soma(2, 3) == 5
+# --- somar ---
 
-    def test_soma_negativos(self):
-        assert soma(-1, -4) == -5
-
-    def test_soma_floats(self):
-        assert soma(1.5, 2.5) == 4.0
-
-    def test_soma_tipo_invalido(self):
-        with pytest.raises(TypeError):
-            soma("2", 3)
+def test_somar_inteiros():
+    assert somar(2, 3) == 5
 
 
-class TestSubtracao:
-    def test_subtracao_inteiros(self):
-        assert subtracao(10, 4) == 6
-
-    def test_subtracao_negativos(self):
-        assert subtracao(-5, -3) == -2
-
-    def test_subtracao_floats(self):
-        assert subtracao(5.5, 2.5) == 3.0
-
-    def test_subtracao_tipo_invalido(self):
-        with pytest.raises(TypeError):
-            subtracao("a", 1)
+def test_somar_negativos():
+    assert somar(-1, -4) == -5
 
 
-class TestMultiplicacao:
-    def test_multiplicacao_inteiros(self):
-        assert multiplicacao(3, 4) == 12
-
-    def test_multiplicacao_por_zero(self):
-        assert multiplicacao(99, 0) == 0
-
-    def test_multiplicacao_negativos(self):
-        assert multiplicacao(-2, 5) == -10
-
-    def test_multiplicacao_tipo_invalido(self):
-        with pytest.raises(TypeError):
-            multiplicacao(None, 2)
+def test_somar_float():
+    assert somar(1.5, 2.5) == pytest.approx(4.0)
 
 
-class TestDivisao:
-    def test_divisao_inteiros(self):
-        assert divisao(10, 2) == 5.0
+def test_somar_tipo_invalido():
+    with pytest.raises(TypeError):
+        somar("2", 3)
 
-    def test_divisao_floats(self):
-        assert divisao(7.5, 2.5) == 3.0
 
-    def test_divisao_negativos(self):
-        assert divisao(-9, 3) == -3.0
+# --- subtrair ---
 
-    def test_divisao_por_zero(self):
-        with pytest.raises(ValueError, match="Divisão por zero não é permitida"):
-            divisao(10, 0)
+def test_subtrair_inteiros():
+    assert subtrair(10, 4) == 6
 
-    def test_divisao_tipo_invalido(self):
-        with pytest.raises(TypeError):
-            divisao("10", 2)
+
+def test_subtrair_resulta_negativo():
+    assert subtrair(3, 7) == -4
+
+
+def test_subtrair_floats():
+    assert subtrair(5.5, 2.5) == pytest.approx(3.0)
+
+
+def test_subtrair_tipo_invalido():
+    with pytest.raises(TypeError):
+        subtrair("a", 1)
+
+
+# --- multiplicar ---
+
+def test_multiplicar_inteiros():
+    assert multiplicar(3, 4) == 12
+
+
+def test_multiplicar_por_zero():
+    assert multiplicar(99, 0) == 0
+
+
+def test_multiplicar_negativos():
+    assert multiplicar(-2, 5) == -10
+
+
+def test_multiplicar_tipo_invalido():
+    with pytest.raises(TypeError):
+        multiplicar(None, 2)
+
+
+# --- dividir ---
+
+def test_dividir_inteiros():
+    assert dividir(10, 2) == pytest.approx(5.0)
+
+
+def test_dividir_resulta_float():
+    assert dividir(7, 2) == pytest.approx(3.5)
+
+
+def test_dividir_negativos():
+    assert dividir(-9, 3) == pytest.approx(-3.0)
+
+
+def test_dividir_por_zero_lanca_excecao():
+    with pytest.raises(ValueError, match="Divisão por zero não é permitida"):
+        dividir(5, 0)
+
+
+def test_dividir_tipo_invalido():
+    with pytest.raises(TypeError):
+        dividir("10", 2)
+
+
+# --- raiz_quadrada ---
+
+def test_raiz_quadrada_numero_positivo():
+    assert raiz_quadrada(9) == pytest.approx(3.0)
+
+
+def test_raiz_quadrada_zero():
+    assert raiz_quadrada(0) == pytest.approx(0.0)
+
+
+def test_raiz_quadrada_numero_decimal():
+    assert raiz_quadrada(2) == pytest.approx(1.4142135623730951)
+
+
+def test_raiz_quadrada_numero_grande():
+    assert raiz_quadrada(1e10) == pytest.approx(1e5)
+
+
+def test_raiz_quadrada_numero_pequeno():
+    assert raiz_quadrada(1e-10) == pytest.approx(1e-5)
+
+
+def test_raiz_quadrada_numero_negativo_lanca_excecao():
+    with pytest.raises(ValueError, match="Raiz quadrada de número negativo não é definida nos reais"):
+        raiz_quadrada(-4)
+
+
+def test_raiz_quadrada_tipo_invalido():
+    with pytest.raises(TypeError):
+        raiz_quadrada("4")
