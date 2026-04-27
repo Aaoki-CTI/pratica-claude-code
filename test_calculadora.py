@@ -16,6 +16,11 @@ def test_somar_float():
     assert somar(1.5, 2.5) == pytest.approx(4.0)
 
 
+def test_somar_tipo_invalido():
+    with pytest.raises(TypeError):
+        somar("2", 3)
+
+
 # --- subtrair ---
 
 def test_subtrair_inteiros():
@@ -24,6 +29,15 @@ def test_subtrair_inteiros():
 
 def test_subtrair_resulta_negativo():
     assert subtrair(3, 7) == -4
+
+
+def test_subtrair_floats():
+    assert subtrair(5.5, 2.5) == pytest.approx(3.0)
+
+
+def test_subtrair_tipo_invalido():
+    with pytest.raises(TypeError):
+        subtrair("a", 1)
 
 
 # --- multiplicar ---
@@ -40,6 +54,11 @@ def test_multiplicar_negativos():
     assert multiplicar(-2, 5) == -10
 
 
+def test_multiplicar_tipo_invalido():
+    with pytest.raises(TypeError):
+        multiplicar(None, 2)
+
+
 # --- dividir ---
 
 def test_dividir_inteiros():
@@ -50,9 +69,18 @@ def test_dividir_resulta_float():
     assert dividir(7, 2) == pytest.approx(3.5)
 
 
+def test_dividir_negativos():
+    assert dividir(-9, 3) == pytest.approx(-3.0)
+
+
 def test_dividir_por_zero_lanca_excecao():
     with pytest.raises(ValueError, match="Divisão por zero não é permitida"):
         dividir(5, 0)
+
+
+def test_dividir_tipo_invalido():
+    with pytest.raises(TypeError):
+        dividir("10", 2)
 
 
 # --- raiz_quadrada ---
@@ -80,3 +108,8 @@ def test_raiz_quadrada_numero_pequeno():
 def test_raiz_quadrada_numero_negativo_lanca_excecao():
     with pytest.raises(ValueError, match="Raiz quadrada de número negativo não é definida nos reais"):
         raiz_quadrada(-4)
+
+
+def test_raiz_quadrada_tipo_invalido():
+    with pytest.raises(TypeError):
+        raiz_quadrada("4")
